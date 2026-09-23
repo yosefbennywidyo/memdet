@@ -1,0 +1,45 @@
+[package]
+name = "memdet"
+description = "Boot-time memory detector for axum/tower apps: attribute RSS growth per boot phase and catch regressions in tests"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+categories = ["development-tools::profiling", "development-tools::testing"]
+keywords = ["memory", "rss", "boot", "axum", "regression"]
+readme = "README.md"
+
+[lints]
+workspace = true
+
+[features]
+default = ["tracing", "hooks"]
+tracing = ["dep:tracing"]
+# Process-global BootReport + phase()/log_boot_summary() + assert_hook_rss_delta!.
+hooks = []
+axum = ["dep:axum"]
+# Boot-memory regression assertions (`testkit` module). Pulls in dhat.
+testkit = ["dep:dhat"]
+# Exposes `override_rss` so downstream test harnesses can feed deterministic RSS
+# values. Pulled in as a dev-dependency feature, never in a normal build.
+test-util = []
+
+[dependencies]
+memory-stats = { workspace = true }
+tracing = { workspace = true, optional = true }
+axum = { workspace = true, optional = true }
+dhat = { workspace = true, optional = true }
+
+[dev-dependencies]
+tracing-subscriber = { workspace = true }
+serial_test = { workspace = true }
+tokio = { workspace = true, features = ["rt", "macros", "time"] }
+
+[[example]]
+name = "axum_ab"
+required-features = ["axum", "tracing"]
+
+[package.metadata.docs.rs]
+all-features = true

@@ -1,0 +1,6 @@
+/target
+.DS_Store
+.env
+# Private working notes (plan, handoff, TODO, research index, integration logs).
+# Versioned in their own local git repo inside internal/; never published.
+/internal/

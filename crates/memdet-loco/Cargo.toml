@@ -1,0 +1,31 @@
+[package]
+name = "memdet-loco"
+description = "Loco adaptor for memdet: attribute boot-time RSS growth to lifecycle phases and initializers"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+categories = ["development-tools::profiling", "development-tools::testing"]
+keywords = ["memory", "rss", "loco", "boot", "initializer"]
+readme = "README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+memdet = { path = "../memdet", version = "=0.1.0-alpha", default-features = false, features = [
+    "hooks",
+    "tracing",
+] }
+loco-rs = { workspace = true }
+async-trait = { workspace = true }
+# loco-rs's `Initializer::after_routes` takes `axum::Router`; match its axum major.
+axum = { workspace = true, default-features = false }
+
+[dev-dependencies]
+memdet = { path = "../memdet", version = "=0.1.0-alpha", default-features = false, features = [
+    "hooks",
+    "test-util",
+] }

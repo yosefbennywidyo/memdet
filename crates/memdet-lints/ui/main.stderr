@@ -1,0 +1,27 @@
+warning: `Extension` payload `HeavyState` is not `Arc`-wrapped
+  --> $DIR/main.rs:27:15
+   |
+LL |     Extension(state)
+   |               ^^^^^
+   |
+   = help: `Router::layer` clones this once per route and `Extension<T>` extraction clones it once per request. If the clone is not cheap, wrap it in `Arc`; if it is (an internally ref-counted handle), add the type to `allow` in `dylint.toml`
+   = note: `#[warn(extension_not_arc)]` on by default
+
+warning: `Extension` payload `std::string::String` is not `Arc`-wrapped
+  --> $DIR/main.rs:31:15
+   |
+LL |     Extension(String::new())
+   |               ^^^^^^^^^^^^^
+   |
+   = help: `Router::layer` clones this once per route and `Extension<T>` extraction clones it once per request. If the clone is not cheap, wrap it in `Arc`; if it is (an internally ref-counted handle), add the type to `allow` in `dylint.toml`
+
+warning: `Extension` payload `std::vec::Vec` is not `Arc`-wrapped
+  --> $DIR/main.rs:35:15
+   |
+LL |     Extension(v)
+   |               ^
+   |
+   = help: `Router::layer` clones this once per route and `Extension<T>` extraction clones it once per request. If the clone is not cheap, wrap it in `Arc`; if it is (an internally ref-counted handle), add the type to `allow` in `dylint.toml`
+
+warning: 3 warnings emitted
+

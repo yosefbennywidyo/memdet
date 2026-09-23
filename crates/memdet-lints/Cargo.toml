@@ -1,0 +1,34 @@
+[package]
+name = "memdet-lints"
+version = "0.1.0"
+authors = ["Yosef Benny Widyokarsono <yosefbennywidyo@gmail.com>"]
+description = "dylint lint: axum `Extension` payloads that are not `Arc`-wrapped and get cloned per route/request"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/yosefbennywidyo/memdet"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+clippy_utils = { git = "https://github.com/rust-lang/rust-clippy", rev = "9fca3bc9fc2bc83c60bde26d18ed68f11564b228" }
+dylint_linting = "6.0"
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+dylint_testing = "6.0"
+# ui fixture uses the real `axum::Extension` so the lint matches by def-path;
+# a fixture with deps must be registered as an example (dylint_testing docs).
+axum = { version = "0.8", default-features = false }
+
+[[example]]
+name = "extension_not_arc"
+path = "ui/main.rs"
+
+# Standalone: its own pinned nightly (rust-toolchain.toml), not a member of the
+# `memdet` workspace.
+[workspace]
+
+[package.metadata.rust-analyzer]
+rustc_private = true
